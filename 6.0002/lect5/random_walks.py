@@ -156,7 +156,7 @@ if __name__ == "__main__":
 #
 # Made series of incremental changes to stimulation so that we could investigate different questions:
 # - Get simple version working first
-# - Did a sanity check
+# - Did a sanity check          
 # - Elaborate a step at a time
 #
 # Showed how to use plots to get insights
