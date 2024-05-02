@@ -69,7 +69,7 @@ class WeightedEdge(Edge):
         return self.outdoor_distance
 
     def __str__(self):
-        return f"{self.get_source()}->{self.get_destination()} ({self.get_total_distance()}, {self.get_outdoor_distance()})"
+        return f"{super().__str__()} ({self.get_total_distance()}, {self.get_outdoor_distance()})"
 
 
 class Digraph(object):
