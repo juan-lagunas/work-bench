@@ -59,7 +59,7 @@ def load_map(map_filename):
             except ValueError:
                 pass
             try:
-                digraph.add_edge(WeightedEdge(src, dest, dist, outdoor_dist))
+                digraph.add_edge(WeightedEdge(src, dest, int(dist), int(outdoor_dist)))
             except ValueError:
                 pass
     return digraph
@@ -125,39 +125,32 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist, best_
         max_dist_outdoors constraints, then return None.
     """
     # TODO
-    path[0].append(start)
+    curr_path, curr_dist, curr_outdoor = path
+    curr_path = curr_path + [start]
     if not digraph.has_node(Node(start)) and not digraph.has_node(Node(end)):
-        raise ValueError("Nodes provided are not proper instances of Node class")
+        raise ValueError("Nodes provided are not in graph")
     elif start == end:
-        best_path = path[0]
-        best_dist = path[1]
-        return path
+        if not best_path or curr_dist <= best_dist:
+            return (curr_path, curr_dist)
+        return None
     else:
         for edge in digraph.get_edges_for_node(Node(start)):
             next = str(edge.get_destination())
-            dist = path[1] + edge.get_total_distance()
-            outdoor_dist = path[2] + edge.get_outdoor_distance()
-            if next not in path[0] and outdoor_dist <= max_dist_outdoors:
-                path[0].append(str(start))
-                path[1] = dist
-                path[2] = outdoor_dist
+            new_dist = curr_dist + edge.get_total_distance()
+            new_outdoor = curr_outdoor + edge.get_outdoor_distance()
+            if next not in curr_path and new_outdoor <= max_dist_outdoors:
                 new_path = get_best_path(
                     digraph,
                     next,
                     end,
-                    path,
+                    [curr_path, new_dist, new_outdoor],
                     max_dist_outdoors,
                     best_dist,
                     best_path,
                 )
-
-        if new_path[1] < best_dist:
-            best_path = new_path
-
-    if best_path[1] <= best_dist and best_path[2] <= max_dist_outdoors:
-        return best_path
-    else:
-        return None
+                if new_path:
+                    best_path, best_dist = new_path
+    return (best_path, best_dist)
 
 
 # Problem 3c: Implement directed_dfs
@@ -191,10 +184,10 @@ def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
     """
     # TODO
     path = get_best_path(digraph, start, end, [[], 0, 0], max_dist_outdoors, 0, [])
-    while path and path[1] > max_total_dist and path[2] > max_dist_outdoors:
-        path = get_best_path(digraph, start, end, [[], 0, 0], max_dist_outdoors, 0, [])
-
-    raise ValueError("No path found")
+    if path[0] and path[1] <= max_total_dist:
+        return path[0]
+    else:
+        raise ValueError("No path found")
 
 
 # ================================================================

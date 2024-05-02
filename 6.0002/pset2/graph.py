@@ -107,9 +107,9 @@ class Digraph(object):
         in the  graph."""
         if self.has_node(edge.get_source()) and self.has_node(edge.get_destination()):
             try:
-                self.edges[edge.get_source].append(edge)
+                self.edges[edge.get_source()].append(edge)
             except:
-                self.edges[edge.get_source] = [edge]
+                self.edges[edge.get_source()] = [edge]
         else:
             raise ValueError("Nodes associated with edge not in graph")
 
