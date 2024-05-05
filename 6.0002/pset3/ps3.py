@@ -611,8 +611,8 @@ def show_plot_room_shape(title, x_label, y_label):
 #     "Number of robots",
 #     "Time / steps",
 # )
-show_plot_room_shape(
-    "Time to clean 80% of a 300-tile room for various room shapes",
-    "Aspect Ratio",
-    "Time / steps",
-)
+# show_plot_room_shape(
+#     "Time to clean 80% of a 300-tile room for various room shapes",
+#     "Aspect Ratio",
+#     "Time / steps",
+# )
