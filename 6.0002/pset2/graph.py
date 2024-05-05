@@ -58,17 +58,21 @@ class Edge(object):
 
 class WeightedEdge(Edge):
     def __init__(self, src, dest, total_distance, outdoor_distance):
-        Edge.__init__(self, src, dest)
+        # pass  # TODO
+        super().__init__(src, dest)
         self.total_distance = total_distance
         self.outdoor_distance = outdoor_distance
 
     def get_total_distance(self):
+        # pass  # TODO
         return self.total_distance
 
     def get_outdoor_distance(self):
+        # pass  # TODO
         return self.outdoor_distance
 
     def __str__(self):
+        # pass  # TODO
         return f"{super().__str__()} ({self.get_total_distance()}, {self.get_outdoor_distance()})"
 
 
@@ -96,8 +100,9 @@ class Digraph(object):
     def add_node(self, node):
         """Adds a Node object to the Digraph. Raises a ValueError if it is
         already in the graph."""
+        # pass  # TODO
         if self.has_node(node):
-            raise ValueError("Node already in graph")
+            raise ValueError("Node already in graph.")
         else:
             self.nodes.add(node)
 
@@ -105,13 +110,16 @@ class Digraph(object):
         """Adds an Edge or WeightedEdge instance to the Digraph. Raises a
         ValueError if either of the nodes associated with the edge is not
         in the  graph."""
-        if self.has_node(edge.get_source()) and self.has_node(edge.get_destination()):
+        # pass  # TODO
+        if not (
+            self.has_node(edge.get_source()) and self.has_node(edge.get_destination())
+        ):
+            raise ValueError("Node(s) not found.")
+        else:
             try:
                 self.edges[edge.get_source()].append(edge)
             except:
                 self.edges[edge.get_source()] = [edge]
-        else:
-            raise ValueError("Nodes associated with edge not in graph")
 
 
 # ================================================================
